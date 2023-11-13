@@ -1,0 +1,22 @@
+namespace WebBanHangOnline.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class UpdateNew : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.tb_New", "SeoTitle", c => c.String());
+            AddColumn("dbo.tb_New", "SeoDescription", c => c.String(maxLength: 250));
+            AddColumn("dbo.tb_New", "SeoKeywords", c => c.String());
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.tb_New", "SeoKeywords");
+            DropColumn("dbo.tb_New", "SeoDescription");
+            DropColumn("dbo.tb_New", "SeoTitle");
+        }
+    }
+}

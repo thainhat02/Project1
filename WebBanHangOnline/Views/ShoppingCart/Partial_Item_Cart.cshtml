@@ -1,0 +1,52 @@
+﻿@model IEnumerable<WebBanHangOnline.Models.ShoppingCartItem>
+@using WebBanHangOnline.Common
+<table class="table">
+    <tr class="text-center">
+        <th>STT</th>
+        <th>Ảnh sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Danh mục</th>
+        <th>Giá</th>
+        <th style="width:100px;">Số lượng</th>
+        <th>Thành tiền</th>
+        <th style="width: 200px;">
+
+        </th>
+    </tr>
+    @if (Model != null && Model.Any())
+    {
+        var i = 0;
+        var tongtien = decimal.Zero;
+        foreach (var item in Model)
+        {
+            tongtien += item.TotalPrice;
+            <tr class="text-center" id="trow_@item.ProductId">
+                <td>@(i+1)</td>
+                <td><img src="@item.ProductImage" width="100" height="100" /></td>
+                <td><a href="/chi-tiet/@item.Alias-p@(item.ProductId)">@item.ProductName</a></td>
+                <td>@item.CategoryName</td>
+                <td>@Common.FormatNumber(item.Price, 0)</td>
+                <td><input type="number" class="form-control" id="Quantity_@item.ProductId" value="@item.Quantity" /></td>
+                <td>@Common.FormatNumber(item.TotalPrice, 2)</td>
+                <th>
+                    <a href="#" data-id="@item.ProductId" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                    <a href="#" data-id="@item.ProductId" class="btn btn-sm btn-success btnUpdate">Cập nhật</a>
+                </th>
+            </tr>
+        }
+        <tr>
+            <td style="width: 100px; font-size: 16px;" ><a href="/san-pham">Mua tiếp</a></td>
+            <th colspan="6" class="text-right">Tổng:</th>
+            <th class="text-center">@Common.FormatNumber(tongtien, 0)</th>
+            <td></td>
+        </tr>
+    }
+
+    else
+    {
+<tr>
+    <td colspan="7">Không có sản phẩm nào trong giỏ hàng của bạn! <a href="/san-pham">Mua</a></td>
+</tr>
+    }
+
+</table>
